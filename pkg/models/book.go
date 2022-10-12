@@ -20,8 +20,27 @@ func init() {
 	db.AutoMigrate(&Book{})
 }
 
-func createBook(b *Book) *Book {
+func CreateBook(b *Book) *Book {
 	db.NewRecord(b)
 	db.Create(&b)
 	return b
+}
+
+func GetAllBooks() []Book {
+	var Books []Book
+	db.Find(&Books)
+	return Books
+}
+
+func GetByBookId(Id int64) (*Book, *gorm.DB) {
+	var getBook Book
+	db := db.Where("ID=?", Id).Find(&getBook)
+	return &getBook, db
+}
+
+func DeleteBook(Id int64) (*Book, *gorm.DB){
+	var Book Book;
+	db := db.Where("ID = ?", Id).Delete(&Book)
+
+	return &Book, db
 }
