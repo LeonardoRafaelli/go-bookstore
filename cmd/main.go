@@ -1,20 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"github.com/LeonardoRafaelli/go-bookstore/pkg/routes"
+	"github.com/gorilla/mux"
+)
 
 func main() {
-	login()
+	r := mux.NewRouter();
+	routes.RegisterBookStoreRoutes(r);
+	log.Fatal(http.ListenAndServe("localhost:9010", r))
 }
 
-func login() {
-
-	fmt.Println(4 >> 2)
-	defer deferTry()
-
-	fmt.Println("Chegou aqui")
-	fmt.Println("Chegou aqui X2")
-}
-
-func deferTry() {
-	fmt.Println("Chegou X3")
-}
