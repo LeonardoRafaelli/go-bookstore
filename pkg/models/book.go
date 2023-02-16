@@ -20,7 +20,13 @@ func init() {
 	db.AutoMigrate(&Book{})
 }
 
-func CreateBook(b *Book) *Book {
+// CreateBook will only work for already created structs. Book struct.
+// Example:
+// b := Book{}
+// b.CreateBook()
+//
+// The data is already in the memory, so now it's being used to create a new record in the database.
+func (b *Book) CreateBook() *Book {
 	db.NewRecord(b)
 	db.Create(&b)
 	return b
@@ -38,8 +44,8 @@ func GetByBookId(Id int64) (*Book, *gorm.DB) {
 	return &getBook, db
 }
 
-func DeleteBook(Id int64) Book{
-	var Book Book;
+func DeleteBook(Id int64) Book {
+	var Book Book
 	db.Where("ID = ?", Id).Delete(&Book)
 
 	return Book
