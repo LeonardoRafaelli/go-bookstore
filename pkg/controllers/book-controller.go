@@ -78,4 +78,9 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	if updateBook.Publication != "" {
 		bookDetails.Publication = updateBook.Publication
 	}
+	db.Save(bookDetails)
+	res, _ := json.Marshal(bookDetails)
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "Pklication/json")
+	w.Write(res)
 }
